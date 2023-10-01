@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/database');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
@@ -8,6 +9,7 @@ const PORT = 3000;
 app.set('view engine', 'ejs'); //not app.use
 const mainAppRoutes = require('./routes/main');
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.use(mainAppRoutes);
 
