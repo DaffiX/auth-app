@@ -11,6 +11,9 @@ router.post('/signup', mainAppController.postSignup);
 router.get('/login', mainAppController.getLogin);
 router.post('/login', mainAppController.postLogin);
 
+router.get('/dashboard', mainAppController.getDashboard);
+router.get('/logout', mainAppController.logout);
+
 router.get("/", mainAppController.index);
 
 

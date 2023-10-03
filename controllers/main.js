@@ -60,12 +60,38 @@ exports.postLogin = async (req, res) => {
 		}
 
 		// Authentication successful, you can set a session or JWT token here
+		//create session
+		req.session.user = {
+			id: user.id,
+			username: user.username,
+			email: user.email,
+		};
+		res.redirect('/dashboard');
 
-		res.send(`Login successful. Welcome, ${user.username}!`);
-		//   res.redirect('/dashboard');
+		// res.send(`Login successful. Welcome, ${user.username}!`);
+	
 	} catch (error) {
 		console.error('Error during login:', error);
 		res.status(500).send('Login failed');
 	}
 };
 
+exports.getDashboard = (req, res) => {
+	if(req.session.user) {
+		//user is authe - render
+		res.render('dashboard', { user:req.session.user });
+
+	} else {
+		//not authen - redirect
+		res.redirect('/login');
+	}
+};
+
+exports.logout = (req, res) => {
+	req.session.destroy((err) => {
+		if(err) {
+			console.error('Error destroying session:', err);
+		}
+		res.redirect('/login');
+	});
+};
